@@ -47,7 +47,7 @@ namespace HardTop
             var mi = (MenuItem)o;
             mi.Enabled = false;
             mi.Checked = !mi.Checked;
-            NativeMethods.ToogleWindowAlwaysOnTop((IntPtr)mi.Tag, mi.Checked);
+            NativeMethods.ToggleWindowAlwaysOnTop((IntPtr)mi.Tag, mi.Checked);
             EnableMenuItem(mi);
         }
 
@@ -93,7 +93,7 @@ namespace HardTop
                 new MenuItem(Resources.StartWithWindowsMenu, StartWithWindowsClick) { Checked = Settings.StartWithWindows },
                 new MenuItem(Resources.SeparatorMenu),
                 new MenuItem(Resources.ExitMenu, ExitMenuClick),
-                new MenuItem("Windows; checked equals \"always on top\" - click to toogle:") { DefaultItem = true, BarBreak = true },
+                new MenuItem(Resources.WindowsMenu) { DefaultItem = true, BarBreak = true },
                 new MenuItem(Resources.SeparatorMenu)
             });
         }
@@ -106,7 +106,7 @@ namespace HardTop
         {
             while (ContextMenu.MenuItems.Count > NUMBER_OF_FIXED_ITEMS) ContextMenu.MenuItems.RemoveAt(NUMBER_OF_FIXED_ITEMS);
             NativeMethods.GetDesktopWindowHandlesAndTitles(out List<IntPtr> handles, out List<string> titles);
-            List<string> ignoreTheseWindows = new List<string>() { "Program Manager", "MainWindow" };
+            List<string> ignoreTheseWindows = new List<string>() { "Program Manager", "MainWindow", "Snipping Tool" };
             for (int i = 0; i < titles.Count; i++)
                 if (!ignoreTheseWindows.Contains(titles[i]))
                     ContextMenu.MenuItems.Add(new MenuItem(titles[i], WindowItem_Click) { Name = titles[i], Tag = handles?[i], Checked = NativeMethods.AlwaysOnTopWindows().Contains((IntPtr)handles?[i]) });

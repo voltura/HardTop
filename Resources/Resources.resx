@@ -163,4 +163,7 @@ Please report to feedback@voltura.se!</value>
   <data name="Version" xml:space="preserve">
     <value>version</value>
   </data>
+  <data name="WindowsMenu" xml:space="preserve">
+    <value>Windows; checked equals "always on top" - click to toggle:</value>
+  </data>
 </root>

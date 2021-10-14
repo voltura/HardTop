@@ -175,5 +175,14 @@ namespace HardTop {
                 return ResourceManager.GetString("Version", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows; checked equals &quot;always on top&quot; - click to toggle:.
+        /// </summary>
+        internal static string WindowsMenu {
+            get {
+                return ResourceManager.GetString("WindowsMenu", resourceCulture);
+            }
+        }
     }
 }

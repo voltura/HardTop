@@ -58,7 +58,7 @@ namespace HardTop
             return topmostWindowHandles;
         }
 
-        internal static void ToogleWindowAlwaysOnTop(IntPtr hwnd, bool alwaysOnTop)
+        internal static void ToggleWindowAlwaysOnTop(IntPtr hwnd, bool alwaysOnTop)
         {
             SetWindowPos(hwnd, (IntPtr)(alwaysOnTop ? -1 : -2), 0, 0, 0, 0, 67);
         }
