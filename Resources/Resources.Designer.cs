@@ -63,7 +63,7 @@ namespace HardTop {
         /// <summary>
         ///   Looks up a localized string similar to HardTop by Voltura AB
         ///
-        ///https://github.com/voltura/VolturaTools
+        ///voltura.github.io/HardTop
         ///
         ///Free for all..
         /// </summary>
