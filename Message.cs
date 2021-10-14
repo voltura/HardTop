@@ -19,14 +19,12 @@ namespace HardTop
 
         internal static void Show(string text, Exception ex = null)
         {
-            MessageBox.Show(ex is null ? text : $"{text}\r\n{ex}", _caption,
-                MessageBoxButtons.OK, ex is null ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            MessageBox.Show(ex is null ? text : $"{text}\r\n{ex}", _caption, MessageBoxButtons.OK, ex is null ? MessageBoxIcon.Information : MessageBoxIcon.Error);
         }
 
         internal static void Show(string text)
         {
-            MessageBox.Show(text, _caption,
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(text, _caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #endregion Show Information or Error dialog methods

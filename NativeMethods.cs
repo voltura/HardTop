@@ -126,57 +126,5 @@ namespace HardTop
         internal static extern bool DestroyIcon(IntPtr handle);
 
         #endregion user32.dll function import; used to free GDI+ icon from memory
-
-        #region Unused code snippets
-        /*
-        const int WS_VISIBLE = 0x10000000;
-        const int GWL_STYLE = -16;
-
-            var processesToKill = new HashSet<uint>();
-            foreach (IntPtr hWnd in topmostWindowHandles)
-            {
-                uint processId = 0;
-                GetWindowThreadProcessId(hWnd, out processId);
-                processesToKill.Add(processId);
-            }
-
-            foreach (uint pid in processesToKill)
-            {
-                Process proc = Process.GetProcessById((int)pid);
-                Console.WriteLine("Killing " + proc.ProcessName);
-                // kill process, except explorer.exe
-            }
-                static bool EnumWindowsCallback(IntPtr hWnd, ArrayList lParam)
-        {
-            int exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
-            int style = GetWindowLong(hWnd, GWL_STYLE);
-            if ((exStyle & WS_EX_TOPMOST) == WS_EX_TOPMOST
-                && (style & WS_VISIBLE) == WS_VISIBLE
-                )
-            {
-                lParam.Add(hWnd);
-            }
-            return true;
-        }
-
-         */
-        /*[DllImport("user32.dll")]
-internal static extern IntPtr GetForegroundWindow();
-
-[DllImport("user32.dll")]
-internal static extern IntPtr GetTopWindow(IntPtr hWnd);
-*/
-        /*      
-      [DllImport("Kernel32.dll")] 
-      public static extern IntPtr GetConsoleWindow();
-
-      internal delegate bool WindowEnumCallback(int hwnd, int lparam);
-
-      [DllImport("user32.dll")]
-      [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool EnumWindows(WindowEnumCallback lpEnumFunc, int lParam);
-*/
-
-        #endregion Unused code snippets
     }
 }

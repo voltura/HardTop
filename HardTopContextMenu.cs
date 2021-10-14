@@ -10,7 +10,6 @@ namespace HardTop
 {
     internal class HardTopContextMenu : IDisposable
     {
-
         #region Internal context menu
 
         internal ContextMenu ContextMenu { get; private set; }
