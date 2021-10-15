@@ -1,6 +1,6 @@
 ## HardTop
 Make any window Always On Top!
-![image](https://user-images.githubusercontent.com/2292809/137413055-55ed1abd-97f5-4aea-9b3a-5a47ed988fda.png)
+![image](https://user-images.githubusercontent.com/2292809/137415010-a479770e-034f-423d-ba32-ee1d9eae9ec9.png)
 
 [![Latest release](https://img.shields.io/github/v/release/voltura/HardTop?label=download%20latest%20release&style=for-the-badge)](https://github.com/voltura/HardTop/releases/latest/download/HardTop.exe)
 
