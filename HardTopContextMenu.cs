@@ -118,7 +118,7 @@ namespace HardTop
             {
                 while (ContextMenu.MenuItems.Count > NUMBER_OF_FIXED_ITEMS) ContextMenu.MenuItems.RemoveAt(NUMBER_OF_FIXED_ITEMS);
                 NativeMethods.GetDesktopWindowHandlesAndTitles(out List<IntPtr> handles, out List<string> titles);
-                List<string> ignoreTheseWindows = new List<string>() { "Program Manager", "MainWindow", "Snipping Tool", "Task Manager", "Task Manager Properties" };
+                List<string> ignoreTheseWindows = new List<string>() { "Program Manager", "MainWindow", "Snipping Tool", "Task Manager", "Task Manager Properties", "Settings" };
                 for (int i = 0; i < titles.Count; i++)
                     if (!ignoreTheseWindows.Contains(titles[i]))
                         ContextMenu.MenuItems.Add(new MenuItem(titles[i], WindowItem_Click) { Name = titles[i], Tag = handles?[i], Checked = NativeMethods.AlwaysOnTopWindows().Contains((IntPtr)handles?[i]) });

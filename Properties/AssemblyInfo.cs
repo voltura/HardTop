@@ -18,8 +18,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("43A57E91-1D03-448D-857C-75B3A81F69A7")]
-[assembly: AssemblyVersion("0.1.3.*")]
-[assembly: AssemblyFileVersion("0.1.3")]
+[assembly: AssemblyVersion("0.1.4.*")]
+[assembly: AssemblyFileVersion("0.1.4")]
 [assembly: NeutralResourcesLanguage("en-US")]
 
 #endregion Assembly information
