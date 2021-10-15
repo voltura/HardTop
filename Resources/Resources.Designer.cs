@@ -83,6 +83,24 @@ namespace HardTop {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Web site / Donate.
+        /// </summary>
+        internal static string DonationMenu {
+            get {
+                return ResourceManager.GetString("DonationMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://voltura.github.io/HardTop#donations.
+        /// </summary>
+        internal static string DonationUrl {
+            get {
+                return ResourceManager.GetString("DonationUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit HardTop.
         /// </summary>
         internal static string ExitMenu {

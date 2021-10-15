@@ -2,7 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
+using static System.Windows.Forms.LinkLabel;
 
 #endregion Using statements
 
@@ -13,7 +15,7 @@ namespace HardTop
         #region Internal context menu
 
         internal ContextMenu ContextMenu { get; private set; }
-        internal const int NUMBER_OF_FIXED_ITEMS = 7;
+        internal const int NUMBER_OF_FIXED_ITEMS = 9;
 
         #endregion Internal context menu
 
@@ -83,19 +85,24 @@ namespace HardTop
 
         #region Private method for context menu creation
 
-        private void CreateContextMenu()
+        private void CreateContextMenu() => ContextMenu = new ContextMenu(new MenuItem[NUMBER_OF_FIXED_ITEMS]
         {
-            ContextMenu = new ContextMenu(new MenuItem[NUMBER_OF_FIXED_ITEMS]
-            {
-                new MenuItem(Resources.AboutMenu, AboutClick),
-                new MenuItem(Resources.SeparatorMenu),
-                new MenuItem(Resources.StartWithWindowsMenu, StartWithWindowsClick) { Checked = Settings.StartWithWindows },
-                new MenuItem(Resources.SeparatorMenu),
-                new MenuItem(Resources.ExitMenu, ExitMenuClick),
-                new MenuItem(Resources.WindowsMenu) { DefaultItem = true, BarBreak = true },
-                new MenuItem(Resources.SeparatorMenu)
-            });
-        }
+            new MenuItem(Resources.AboutMenu, AboutClick),
+            new MenuItem(Resources.SeparatorMenu),
+            new MenuItem(Resources.DonationMenu, (o, e) => {
+                using (Process p = new Process())
+                {
+                    p.StartInfo = new ProcessStartInfo(Resources.DonationUrl) { UseShellExecute = true };
+                    p.Start();
+                }
+            }),
+            new MenuItem(Resources.SeparatorMenu),
+            new MenuItem(Resources.StartWithWindowsMenu, StartWithWindowsClick) { Checked = Settings.StartWithWindows },
+            new MenuItem(Resources.SeparatorMenu),
+            new MenuItem(Resources.ExitMenu, ExitMenuClick),
+            new MenuItem(Resources.WindowsMenu) { DefaultItem = true, BarBreak = true },
+            new MenuItem(Resources.SeparatorMenu)
+        });
 
         #endregion Private method for context menu creation
 
