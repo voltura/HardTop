@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
-using static System.Windows.Forms.LinkLabel;
 
 #endregion Using statements
 
@@ -24,9 +23,9 @@ namespace HardTop
         internal HardTopContextMenu()
         {
             CreateContextMenu();
-            AddUpdatedWindowsInfoToContextMenu();
             ContextMenu.Collapse += ContextMenu_Collapse;
             ContextMenu.Popup += ContextMenu_Popup;
+            AddUpdatedWindowsInfoToContextMenu();
         }
 
         #endregion Internal constructor
@@ -45,11 +44,22 @@ namespace HardTop
 
         private void WindowItem_Click(object o, EventArgs e)
         {
-            var mi = (MenuItem)o;
-            mi.Enabled = false;
-            mi.Checked = !mi.Checked;
-            NativeMethods.ToggleWindowAlwaysOnTop((IntPtr)mi.Tag, mi.Checked);
-            EnableMenuItem(mi);
+            MenuItem mi = null;
+            try
+            {
+                mi = (MenuItem)o;
+                mi.Enabled = false;
+                mi.Checked = !mi.Checked;
+                NativeMethods.ToggleWindowAlwaysOnTop((IntPtr)mi.Tag, mi.Checked);
+            }
+            catch (Exception ex)
+            {
+                Message.Show(Resources.UnhandledException, ex);
+            }
+            finally
+            {
+                EnableMenuItem(mi);
+            }
         }
 
         private static void ExitMenuClick(object o, EventArgs e)
@@ -61,7 +71,7 @@ namespace HardTop
         {
             try
             {
-                MenuItem mi = (MenuItem)o;
+                var mi = (MenuItem)o;
                 mi.Enabled = false;
                 mi.Checked = !mi.Checked;
                 Settings.StartWithWindows = mi.Checked;
@@ -75,7 +85,7 @@ namespace HardTop
 
         private void AboutClick(object o, EventArgs e)
         {
-            MenuItem mi = (MenuItem)o;
+            var mi = (MenuItem)o;
             mi.Enabled = false;
             Message.Show(Resources.About);
             EnableMenuItem(mi);
@@ -89,13 +99,7 @@ namespace HardTop
         {
             new MenuItem(Resources.AboutMenu, AboutClick),
             new MenuItem(Resources.SeparatorMenu),
-            new MenuItem(Resources.DonationMenu, (o, e) => {
-                using (Process p = new Process())
-                {
-                    p.StartInfo = new ProcessStartInfo(Resources.DonationUrl) { UseShellExecute = true };
-                    p.Start();
-                }
-            }),
+            new MenuItem(Resources.DonationMenu, (o, e) => { new Process() { StartInfo = new ProcessStartInfo(Resources.DonationUrl) { UseShellExecute = true } }.Start(); } ),
             new MenuItem(Resources.SeparatorMenu),
             new MenuItem(Resources.StartWithWindowsMenu, StartWithWindowsClick) { Checked = Settings.StartWithWindows },
             new MenuItem(Resources.SeparatorMenu),
@@ -110,12 +114,24 @@ namespace HardTop
 
         private void AddUpdatedWindowsInfoToContextMenu()
         {
-            while (ContextMenu.MenuItems.Count > NUMBER_OF_FIXED_ITEMS) ContextMenu.MenuItems.RemoveAt(NUMBER_OF_FIXED_ITEMS);
-            NativeMethods.GetDesktopWindowHandlesAndTitles(out List<IntPtr> handles, out List<string> titles);
-            List<string> ignoreTheseWindows = new List<string>() { "Program Manager", "MainWindow", "Snipping Tool" };
-            for (int i = 0; i < titles.Count; i++)
-                if (!ignoreTheseWindows.Contains(titles[i]))
-                    ContextMenu.MenuItems.Add(new MenuItem(titles[i], WindowItem_Click) { Name = titles[i], Tag = handles?[i], Checked = NativeMethods.AlwaysOnTopWindows().Contains((IntPtr)handles?[i]) });
+            try
+            {
+                while (ContextMenu.MenuItems.Count > NUMBER_OF_FIXED_ITEMS) ContextMenu.MenuItems.RemoveAt(NUMBER_OF_FIXED_ITEMS);
+                NativeMethods.GetDesktopWindowHandlesAndTitles(out List<IntPtr> handles, out List<string> titles);
+                List<string> ignoreTheseWindows = new List<string>() { "Program Manager", "MainWindow", "Snipping Tool", "Task Manager", "Task Manager Properties" };
+                for (int i = 0; i < titles.Count; i++)
+                    if (!ignoreTheseWindows.Contains(titles[i]))
+                        ContextMenu.MenuItems.Add(new MenuItem(titles[i], WindowItem_Click) { Name = titles[i], Tag = handles?[i], Checked = NativeMethods.AlwaysOnTopWindows().Contains((IntPtr)handles?[i]) });
+            }
+            catch (Exception ex)
+            {
+                Message.Show(Resources.UnhandledException, ex);
+            }
+            finally
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
         }
 
         private static void EnableMenuItem(MenuItem mi)

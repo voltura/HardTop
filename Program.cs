@@ -1,6 +1,7 @@
 ﻿#region Using statements
 
 using System;
+using System.Runtime;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -28,6 +29,8 @@ namespace HardTop
             }
             Application.EnableVisualStyles();
             Application.VisualStyleState = VisualStyleState.ClientAndNonClientAreasEnabled;
+            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+            GCSettings.LatencyMode = GCLatencyMode.Batch;
             using (HardTopApplicationContext context = new HardTopApplicationContext())
             {
                 if (context?.Gui != null)
