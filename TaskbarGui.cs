@@ -31,7 +31,7 @@ namespace HardTop
 
         private static NotifyIcon GetNotifyIcon(ContextMenu contextMenu)
         {
-            return new NotifyIcon { Visible = true, ContextMenu = contextMenu, Text = "HardTop", Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath) };
+            return new NotifyIcon { Visible = true, ContextMenu = contextMenu, Text = Application.ProductName, Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath) };
         }
 
         #endregion Private helper property to create NotifyIcon
