@@ -128,6 +128,9 @@ Free for all.</value>
   <data name="AboutMenu" xml:space="preserve">
     <value>About HardTop</value>
   </data>
+  <data name="CloseMenuMenu" xml:space="preserve">
+    <value>Close menu</value>
+  </data>
   <data name="DonationMenu" xml:space="preserve">
     <value>Web site / Donate</value>
   </data>
@@ -154,6 +157,9 @@ Please report to feedback@voltura.se!</value>
   </data>
   <data name="SettingsMenu" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="ShowMenuMenu" xml:space="preserve">
+    <value>Show menu</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
     <value>HardTop set to start with Windows</value>

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Forms;
 
 #endregion Using statements
@@ -11,10 +12,16 @@ namespace HardTop
 {
     internal class HardTopContextMenu : IDisposable
     {
+        #region Private variables
+
+        private InvisibleWindowForContextMenu _invisibleWindow;
+
+        #endregion Private variables
+
         #region Internal context menu
 
         internal ContextMenu ContextMenu { get; private set; }
-        internal const int NUMBER_OF_FIXED_ITEMS = 9;
+        internal const int NUMBER_OF_FIXED_ITEMS = 13;
 
         #endregion Internal context menu
 
@@ -26,6 +33,14 @@ namespace HardTop
             ContextMenu.Collapse += ContextMenu_Collapse;
             ContextMenu.Popup += ContextMenu_Popup;
             AddUpdatedWindowsInfoToContextMenu();
+            CreateInvisibleWindowForContextMenu();
+            GlobalHotKey.RegisterHotKey("Ctrl + Alt + Z", () => ShowWindowList());
+        }
+
+        private void CreateInvisibleWindowForContextMenu()
+        {
+            _invisibleWindow = new InvisibleWindowForContextMenu(ContextMenu);
+            
         }
 
         #endregion Internal constructor
@@ -64,7 +79,7 @@ namespace HardTop
 
         private static void ExitMenuClick(object o, EventArgs e)
         {
-            Application.Exit();
+            if (MessageBox.Show($"Close {Application.ProductName}?", $"{Application.ProductName} {Resources.Version} {Application.ProductVersion}", MessageBoxButtons.YesNo) == DialogResult.Yes) Application.Exit();
         }
 
         private void StartWithWindowsClick(object o, EventArgs e)
@@ -95,18 +110,24 @@ namespace HardTop
 
         #region Private method for context menu creation
 
-        private void CreateContextMenu() => ContextMenu = new ContextMenu(new MenuItem[NUMBER_OF_FIXED_ITEMS]
+        private void CreateContextMenu()
         {
-            new MenuItem(Resources.AboutMenu, AboutClick),
-            new MenuItem(Resources.SeparatorMenu),
-            new MenuItem(Resources.DonationMenu, (o, e) => { new Process() { StartInfo = new ProcessStartInfo(Resources.DonationUrl) { UseShellExecute = true } }.Start(); } ),
-            new MenuItem(Resources.SeparatorMenu),
-            new MenuItem(Resources.StartWithWindowsMenu, StartWithWindowsClick) { Checked = Settings.StartWithWindows },
-            new MenuItem(Resources.SeparatorMenu),
-            new MenuItem(Resources.ExitMenu, ExitMenuClick),
-            new MenuItem(Resources.WindowsMenu) { DefaultItem = true, BarBreak = true },
-            new MenuItem(Resources.SeparatorMenu)
-        });
+            ContextMenu = new ContextMenu(new MenuItem[NUMBER_OF_FIXED_ITEMS] {
+                new MenuItem(Resources.AboutMenu, AboutClick),
+                new MenuItem(Resources.SeparatorMenu),
+                new MenuItem(Resources.DonationMenu, (o, e) => { new Process() { StartInfo = new ProcessStartInfo(Resources.DonationUrl) { UseShellExecute = true } }.Start(); } ),
+                new MenuItem(Resources.SeparatorMenu),
+                new MenuItem(Resources.StartWithWindowsMenu, StartWithWindowsClick) { Checked = Settings.StartWithWindows },
+                new MenuItem(Resources.SeparatorMenu),
+                new MenuItem(Resources.CloseMenuMenu, (o, e) => { ; }),
+                new MenuItem(Resources.SeparatorMenu),
+                new MenuItem(Resources.ShowMenuMenu + " (" + Settings.GetSetting("GlobalHotkey") + ")"),
+                new MenuItem(Resources.SeparatorMenu),
+                new MenuItem(Resources.ExitMenu, ExitMenuClick),
+                new MenuItem(Resources.WindowsMenu) { DefaultItem = true, BarBreak = true },
+                new MenuItem(Resources.SeparatorMenu) 
+            });
+        }
 
         #endregion Private method for context menu creation
 
@@ -140,6 +161,32 @@ namespace HardTop
         }
 
         #endregion Private helper methods for menu items
+
+        private void ShowWindowList()
+        {
+            ContextMenu.Show(_invisibleWindow, new System.Drawing.Point());
+        }
+
+        #region Private helper window for context menu
+
+        private class InvisibleWindowForContextMenu : Form
+        {
+            public InvisibleWindowForContextMenu(ContextMenu contextMenu)
+            {
+                StartPosition = FormStartPosition.Manual;
+                Width = 0;
+                Height = 0;
+                Top = 9000;
+                Left = 9000;
+                Visible = true;
+                ControlBox = false;
+                ShowIcon = false;
+                ShowInTaskbar = false;
+                ContextMenu = contextMenu;
+            }
+        }
+
+        #endregion Private helper window for context menu
 
         #region IDisposable methods
 

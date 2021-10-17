@@ -1,6 +1,7 @@
 ﻿#region Using statements
 
 using Microsoft.Win32;
+using System;
 using System.Configuration;
 using System.IO;
 using System.Windows.Forms;
@@ -72,6 +73,7 @@ namespace HardTop
                 string xml = $@"<?xml version=""1.0"" encoding=""utf-8"" ?>
 <configuration>
   <appSettings>
+    <add key=""GlobalHotkey"" value=""Ctrl + Alt + Z""/>
   </appSettings>
 </configuration>";
                 File.WriteAllText(settingsFile, xml, System.Text.Encoding.UTF8);

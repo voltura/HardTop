@@ -96,6 +96,7 @@
     <ApplicationManifest>Properties\settings.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GlobalHotkey.cs" />
     <Compile Include="HardTopApplicationContext.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="NativeMethods.cs" />
@@ -131,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -138,6 +140,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">

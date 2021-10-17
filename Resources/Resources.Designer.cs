@@ -83,6 +83,15 @@ namespace HardTop {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close menu.
+        /// </summary>
+        internal static string CloseMenuMenu {
+            get {
+                return ResourceManager.GetString("CloseMenuMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Web site / Donate.
         /// </summary>
         internal static string DonationMenu {
@@ -153,6 +162,15 @@ namespace HardTop {
         internal static string SettingsMenu {
             get {
                 return ResourceManager.GetString("SettingsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show menu.
+        /// </summary>
+        internal static string ShowMenuMenu {
+            get {
+                return ResourceManager.GetString("ShowMenuMenu", resourceCulture);
             }
         }
         
